@@ -1,14 +1,21 @@
 {%extends 'layout.html'%}
 
-{%block titulo%}Bienvenida{%endblock%}
+{%block titulo%}Error{%endblock%}
 
 
 {%block cuerpo%}
-
-<p>Contraseña incorrecta.</p>
-
-<p><a href = "{{url_for('home')}}">Inténtalo de nuevo</a></p>
-
-
-
+<div class="pt1 pb1 text--white bg--tertiary-color">
+    <div class="bg--dark-gray align--center pt3 pb3">
+    
+        <div class="container pt2 pb2">
+            <p class="h3 text--white mb1 bold">Error</p>
+            <p class="text--white mb3">Contraseña incorrecta</p>
+            <a class="btn btn--secondary" href="{{url_for('login')}}">Volver a intentar</a>
+            <a class="btn btn--secondary" href="{{url_for('home')}}">Volver a inicio</a>
+            
+            </div>
+        </div>
+    
+        </div>
+    </div>
 {%endblock%}
