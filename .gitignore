@@ -1,2 +1,4 @@
 no_sinc
 *.db
+__pycache__
+*.pkl

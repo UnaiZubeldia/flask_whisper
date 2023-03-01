@@ -11,10 +11,10 @@
 <div class="container pt3 pb3">
 <section class="pb4">
   <h2 class="text--gray pb1 border--bottom">Registrarse</h2>
-  <form class="form">
-      <input class="form-control mb1" id="nombre" placeholder="Nombre">
-      <input class="form-control mb1" id='email' type="email" placeholder="Dirección de correo">
-      <input class="form-control mb1" id='password' type="password" placeholder="Contraseña">
+  <form class="form" action = "{{url_for('registro')}}" method="post">
+      <input class="form-control mb1" id="nombre" name="username" placeholder="Nombre">
+      <input class="form-control mb1" id='email' name="email"" type="email" placeholder="Dirección de correo">
+      <input class="form-control mb1" id='password' name="password" type="password" placeholder="Contraseña">
       <button class="btn btn--default" type="submit">Registrarme</button>
   </form>
 </section>

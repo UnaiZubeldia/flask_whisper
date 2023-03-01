@@ -3,12 +3,10 @@
 {% block titulo %} Análisis de la transcripción {% endblock %}
 
 {% block cuerpo %}
+<div class="container pt3 pb3">
 
-<h1> Análisis de la transcripción </h1>
-<div class="pt1 pb1 text--white bg--darkest-gray">
-    <div class="texto-tra">
-        <p>{{texto}}</p>
-    </div>
+    <h2>transcripción completada</h2>
+    <a href="{{ url_for('descargar_transcripcion') }}">Descargar transcripción</a>
 </div>
 
 <p> ¿Mucho texto? No hay problema, ¡te lo resumimos! </p>
