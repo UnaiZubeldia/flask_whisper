@@ -8,15 +8,16 @@
 
 
 {%block cuerpo%}
-
-<p>Rellena tus datos:</p>
-<div>
-    <form action = "{{url_for('registro')}}" method="POST">
-        <p><input type="text" name="nombre" id="nombre" placeholder="Nombre"></p>
-        <p><input type="email" name="email" id="email" placeholder="Dirección de correo"></p>
-        <p><input type="password" name="password" id="password" placeholder="Contraseña"></p>
-        <button type="submit" id="submit-button">Submit</button>
-    </form>
+<div class="container pt3 pb3">
+<section class="pb4">
+  <h2 class="text--gray pb1 border--bottom">Registrarse</h2>
+  <form class="form">
+      <input class="form-control mb1" placeholder="Nombre">
+      <input class="form-control mb1" type="email" placeholder="Dirección de correo">
+      <input class="form-control mb1" type="password" placeholder="Contraseña">
+      <button class="btn btn--default" type="submit">Registrarme</button>
+  </form>
+</section>
 </div>
 
 <style>
