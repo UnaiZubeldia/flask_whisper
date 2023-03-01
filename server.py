@@ -1,16 +1,28 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, make_response
 from pydub import AudioSegment
 import whisper
 import sql
+import os
+import modelos
+import pickle
 
 #necesario ffmeg
 # https://es.wikihow.com/instalar-FFmpeg-en-Windows
+
+if not os.path.exists('modelos'):
+    modelos.main()
 
 app = Flask(__name__, static_folder='static', template_folder='templates')
 
 app.secret_key = '<<<$$$super_secret_key$$$>>>'
 
 sql.create_db()
+
+modelos = {
+    'tiny': pickle.load(open('modelos/tiny.pkl', 'rb')), 
+    'base': pickle.load(open('modelos/base.pkl', 'rb'))}
+
+
 
 
 # PENDIENTE:
@@ -32,13 +44,11 @@ def index():
 def registro():
     if request.method == "POST":
         email = request.form.get("email")
-        username = request.form.get("nombre")
+        username = request.form.get("username")
         password = request.form.get("password")
-        print(email)
-        print(username)
-        print(password)
-        insertado = sql.insert_user(email, username, password)
-        return render_template("registro_completado.html", insertado = insertado)
+        session['nombre'] = username
+        sql.insert_user(email, username, password)
+        return render_template("login_exitoso.html", nombre = username)
     return render_template("registro.html")
 
 @app.route("/login", methods = ["GET", "POST"])
@@ -53,7 +63,7 @@ def login():
             return render_template('wrong_pwd.html')
         nombre = sql.consultar_nombre(email)
         session['nombre'] = nombre
-        return render_template('index.html', nombre = nombre)
+        return render_template('login_exitoso.html', nombre = session['nombre'])
     return render_template("login.html")
 
 
@@ -67,16 +77,32 @@ def transcriptor():
              audio = AudioSegment.from_file(file, file.filename.split(".")[-1])
              mp3_path = 'audio.mp3'
              audio.export(mp3_path, format="mp3")
-             model = whisper.load_model(size)
+             model = modelos[size]
+             print('Transcribiendo...')
              resultado = model.transcribe(mp3_path)
+             session['transcripcion'] = resultado['text']
              print('Transcripción completada')
              # Se guarda resultado['text'] en la base de datos para analizar ese texto
              sql.guardar_transcripcion(session['email'], resultado['text'])
-             return render_template('resultado_transcripcion.html', texto=resultado['text'])
+             return render_template('resultado_transcripcion.html')
         # else:
         #    return render_template('transcriptor.html', error="Error: Debe seleccionar un archivo de video válido (mp4, mov o avi)")
      else:
          return render_template('transcriptor.html')
+
+@app.route('/descargar_transcripcion')  
+def descargar_transcripcion():
+    # Carga el contenido de la transcripción
+    contenido = session['transcripcion']
+
+    # Crea la respuesta del archivo
+    respuesta = make_response(contenido)
+    
+    # Establece el tipo de contenido y la descarga del archivo
+    respuesta.headers['Content-Type'] = 'text/plain'
+    respuesta.headers['Content-Disposition'] = 'attachment; filename=transcripcion.txt'
+
+    return respuesta
 
 
 

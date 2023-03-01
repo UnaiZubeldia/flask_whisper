@@ -6,13 +6,16 @@
 <div class="container pt3 pb3">
 
     <h2>transcripción completada</h2>
-    <a href="{{ url_for('descargar_transcripcion') }}">Descargar transcripción</a>
+    <br>
+    <a class="btn btn--default" href="{{ url_for('descargar_transcripcion') }}">Descargar transcripción</a>
+    <br>
+
+    <h3> ¿Mucho texto? No hay problema, ¡te lo resumimos! </h3>
+    <a class="btn btn--default" href="{{url_for('resumen')}}">Resumen</a>
+    <br>
+    <h3> ¿Quieres ver más? ¡Aquí van unas estadísticas! </h3>
+    <a class="btn btn--default" href="{{url_for('estadisticas')}}">Estadísticas y gráficos</a>
 </div>
 
-<p> ¿Mucho texto? No hay problema, ¡te lo resumimos! </p>
-<a href="{{url_for('resumen')}}">Resumen</a>
-
-<p> ¿Quieres ver más? ¡Aquí van unas estadísticas! </p>
-<a href="{{url_for('estadisticas')}}">Estadísticas y gráficos</a>
 
 {% endblock %}
