@@ -1,0 +1,28 @@
+{% extends 'layout.html' %}
+
+{% block titulo %} Añadir fichero {% endblock %}
+
+
+{% block cuerpo %}
+<div class="pt1 pb1 bg--lightest-gray">
+<div class="container pt3 pb3">
+<section class="pb4">
+    <h2 class="text--gray pb1 border--bottom">Subir video</h2>
+    <form method="post" enctype="multipart/form-data" action = '{{url_for("transcriptor")}}'>
+        <input type="file" name="file">
+        <br>
+        <div class="select mb1">
+            <label for="size">Selecciona la complejidad del modelo:</label>
+            <select name='size'>
+                <option selected>tiny</option>
+                <option>base</option>
+                <option>small</option>
+            </select>
+        </div>
+        <button class="btn btn--default">Empezar transcripción</button>
+    </form>
+</section>
+</div>
+</div>
+
+{% endblock %}

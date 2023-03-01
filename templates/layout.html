@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en-us">
+
+    <head>
+
+        <!-- Meta -->
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+
+        <title>{%block titulo%}{%endblock%}</title>
+        <meta name="description" content="">
+
+        <!-- The compiled CSS file -->
+        <link rel="stylesheet" href="../static/css/production.css">
+
+        <!-- Web fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700|Source+Serif+Pro:700" rel="stylesheet"> 
+
+        <!-- Favicons -->
+        <link rel="icon" href="../static/imagenes/icon.png">
+
+    </head>
+
+    <body class="has-animations">
+
+    <!-- Header -->
+    <header class="align--center pt3">
+        <div class="container--lg border--bottom pb3">
+            <img class="logo mb3 reveal-on-scroll is-revealing" src="../static/icon.png" alt="logo">
+            <h1 class="mb2">Transcriptor de videos.</h1>
+            <h4>Web realizada con Flask por Jon Ortega y Unai Zubeldia</h4>
+            <span>
+                <a href="https://www.apple.com/ios/app-store/" class="link"><img class="download" src="/img/ios.png" alt="Download on the App Store"></a>
+            </span>
+            <span>
+                <a href="https://play.google.com/store" class="link"><img class="download" src="/img/googleplay.png" alt="Download on Google Play"></a>
+            </span>
+        </div>
+    </header>
+
+    {%block cuerpo%}
+    {%endblock%}
+
+    {%block footer%}
+    <div class="container--lg pt3 pb3 mb2 align--center">
+        <p class="mb2">Tecnologías</p>
+        <span><img class="mentioned" src="../static/imagenes/mentioned.svg" alt="New York Times, TC, Product Hunt, Recode"></span>
+    </div>
+
+    <!-- CTA -->
+    <div class="bg--dark-gray align--center pt3 pb3">
+        <div class="container pt2 pb2">
+            <img class="cta-image mb2 reveal-on-scroll is-revealing" src="/img/text.svg" alt="Text the app">
+            <p class="h3 text--white mb1 bold">We'll text you the&nbsp;app</p>
+            <p class="text--white mb3">Just insert your number below. Messaging rates&nbsp;apply.</p>
+            <div class="inline-block mr1 no-mr-on-mobile" style="width:280px;max-width:100%">
+                <input class="form-control" type="tel" placeholder="Phone number">
+            </div>
+            <button class="btn btn--secondary">Send</button>
+        </div>
+    </div>
+    <!-- Footer -->
+    <footer class="pt1 pb3 align--center-on-mobile">
+        <div class="container">
+            <div class="grid-row">
+                <div class="grid-column mt2 span-half">
+                    <div class="mb1">
+                        <span>
+                            <a href="https://www.apple.com/ios/app-store/" class="link"><img class="download" src="/img/ios.png" alt="Download on the App Store"></a>
+                        </span>
+                        <span>
+                            <a href="https://play.google.com/store" class="link"><img class="download" src="/img/googleplay.png" alt="Download on Google Play"></a>
+                        </span>
+                    </div>
+                    <p class="small">Design by <a href="https://www.papayatemplates.com" class="link link--text">Papaya</a>. Illustrations from&nbsp;<a href="https://undraw.co/" class="link link--text">Undraw</a>.</p>
+                </div>
+                <div class="grid-column mt2 span-half align--right align--center-on-mobile">
+                    <ul class="no-bullets list--inline">
+                        <li class="mr1"><a href="" class="link"><img class="icon" src="/img/youtube.svg" alt="YouTube"></a></li>
+                        <li class="mr1"><a href="" class="link"><img class="icon" src="/img/twitter.svg" alt="Twitter"></a></li>
+                        <li><a href="" class="link"><img class="icon" src="/img/facebook.svg" alt="Facebook"></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+    {%endblock%}
+    </body>
+</html>
+

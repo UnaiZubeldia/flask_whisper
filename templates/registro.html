@@ -1,0 +1,54 @@
+{%extends 'layout.html'%}
+
+{%block titulo%}Registro{%endblock%}
+
+{%block cabecera%}
+<h1>¡Regístrate!</h1>
+{%endblock%}
+
+
+{%block cuerpo%}
+
+<p>Rellena tus datos:</p>
+<div>
+    <form action = "{{url_for('registro')}}" method="POST">
+        <p><input type="text" name="nombre" id="nombre" placeholder="Nombre"></p>
+        <p><input type="email" name="email" id="email" placeholder="Dirección de correo"></p>
+        <p><input type="password" name="password" id="password" placeholder="Contraseña"></p>
+        <button type="submit" id="submit-button">Submit</button>
+    </form>
+</div>
+
+<style>
+    button#submit-button {
+      position: relative;
+      transition: transform 0.2s;
+    }
+    </style>
+
+<script>
+    const form = document.querySelector('form');
+    const nombre = document.querySelector('#nombre');
+    const email = document.querySelector('#email');
+    const password = document.querySelector('#password');
+    const submitButton = document.querySelector('#submit-button');
+    let intervalId;
+    
+    submitButton.addEventListener('mouseenter', function() {
+      if (!nombre.value || !email.value || !password.value) {
+        const distance = 40;
+        intervalId = setInterval(function() {
+          const x = distance * Math.sin(Date.now() / 200 + Math.random() * 100);
+          const y = distance * Math.cos(Date.now() / 200 + Math.random() * 100);
+          submitButton.style.transform = `translate(${x}px, ${y}px)`;
+        }, 50);
+      }
+    });
+    
+    submitButton.addEventListener('mouseleave', function() {
+      clearInterval(intervalId);
+      submitButton.style.transform = 'translate(0, 0)';
+    });
+    </script>
+
+{%endblock%}

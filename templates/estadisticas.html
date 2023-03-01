@@ -1,0 +1,14 @@
+{%extends 'layout.html'%}
+
+{%block titulo%}Estadísticas{%endblock%}
+
+
+{%block cuerpo%}
+
+<img src="{{url_for('static', filename='img/wordcloud.png')}}" alt="Wordcloud de las palabras de los textos del usuario" class="img-fluid">
+<img src="{{url_for('static', filename='img/histograma.png')}}" alt="Histograma de frecuencias de las palabras de los textos del usuario" class="img-fluid">
+<br>
+<a href="{{url_for('resumen')}}">Resumen</a>
+<a href="{{url_for('resultado_transcripcion')}}">Volver a la transcripción completa</a>
+
+{%endblock%}

@@ -1,0 +1,14 @@
+{%extends 'layout.html'%}
+
+{%block titulo%}Resumen{%endblock%}
+
+
+{%block cuerpo%}
+
+<h3> Aquí tienes un resumen de la transcripción de tu vídeo. </h3>
+{{resumen}}
+<br>
+<a href="{{url_for('estadisticas')}}">Estadísticas y gráficos</a>
+<a href="{{url_for('resultado_transcripcion')}}">Volver a la transcripción completa</a>
+
+{%endblock%}

@@ -1,0 +1,18 @@
+{%extends 'layout.html'%}
+
+{%block titulo%}Registro{%endblock%}
+
+
+{%block cuerpo%}
+
+{%if insertado%}
+    ¡Gracias por registrarte, {{insertado[0]}}!
+    <br>
+    <p><a href = "{{url_for('index')}}">Acceso</a></p>
+    <p><a href = "{{url_for('login')}}">Inicia sesión</a></p>
+{%else%}
+    No se ha podido registrar este correo, inténtalo de nuevo.
+    <p><a href="{{url_for('registro')}}">Regístrate</a></p>
+{%endif%}
+
+{%endblock%}
