@@ -66,6 +66,10 @@ def login():
         return render_template('login_exitoso.html', nombre = session['nombre'])
     return render_template("login.html")
 
+@app.route('/login_exitoso', methods=['GET', 'POST'])
+def login_exitoso():
+    return render_template('login_exitoso.html', nombre = session['nombre'])
+
 
 @app.route('/transcriptor', methods=['GET', 'POST'])
 def transcriptor():
