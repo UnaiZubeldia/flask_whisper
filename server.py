@@ -119,6 +119,8 @@ def transcriptor():
          if file and file.filename.lower().endswith(('.mp4', '.mov', '.avi')):
              # Conversión del archivo a mp3
              audio = AudioSegment.from_file(file, file.filename.split(".")[-1])
+             # get the name of the file
+             filename = file.filename
              mp3_path = 'audio.mp3'
              audio.export(mp3_path, format="mp3")
              model = modelos[size]
@@ -127,7 +129,7 @@ def transcriptor():
              session['transcripcion'] = resultado['text']
              print('Transcripción completada')
              # Se guarda resultado['text'] en la base de datos para analizar ese texto
-             sql.guardar_transcripcion(session['email'], session['transcripcion'])
+             sql.guardar_transcripcion(session['email'], session['transcripcion'], filename)
              return redirect(url_for('resultado_transcripcion'))
         # else:
         #    return render_template('transcriptor.html', error="Error: Debe seleccionar un archivo de video válido (mp4, mov o avi)")
@@ -136,7 +138,13 @@ def transcriptor():
 
 @app.route('/resultado_transcripcion')
 def resultado_transcripcion():
-    return render_template('resultado_transcripcion.html', transcripcion = session['transcripcion'])
+    historial = sql.consultar_filenames(session['email'])
+    # add numeration to the filenames as a dictionary
+    historial = {i+1: historial[i] for i in range(0, len(historial))}
+
+    return render_template('resultado_transcripcion.html', 
+                            transcripcion = session['transcripcion'],
+                            historial = historial)
 
 @app.route('/descargar_transcripcion')  
 def descargar_transcripcion():

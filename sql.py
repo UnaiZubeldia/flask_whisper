@@ -16,7 +16,7 @@ def create_db():
         conn = sqlite.connect('database.db')
         c = conn.cursor()
         c.execute('''CREATE TABLE users (email text, username text, password text)''')
-        c.execute('''CREATE TABLE transcripciones (email text, texto text)''')
+        c.execute('''CREATE TABLE transcripciones (email text, texto text, filename text)''')
         conn.commit()
         conn.close()
         return None
@@ -59,10 +59,10 @@ def comprobar_pwd(email:str, password:str):
     return password == pw
 
 
-def guardar_transcripcion(email:str, texto:str):
+def guardar_transcripcion(email:str, texto:str, filename:str):
     con = sqlite.connect("database.db")
     cur = con.cursor()
-    cur.execute("INSERT INTO transcripciones VALUES (?, ?)", (email, texto))
+    cur.execute("INSERT INTO transcripciones VALUES (?, ?, ?)", (email, texto, filename))
     con.commit()
     con.close()
     return None
@@ -87,3 +87,12 @@ def consultar_textos(email:str):
     textos = ' '.join([texto[0] for texto in textos])
     con.close()
     return textos
+
+def consultar_filenames(email:str):
+    # Consulta todos los filenames de un usuario
+    con = sqlite.connect("database.db")
+    cur = con.cursor()
+    cur.execute("SELECT filename FROM transcripciones WHERE email = ?", (email,))
+    filenames = cur.fetchall()
+    con.close()
+    return filenames
