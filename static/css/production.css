@@ -56,5 +56,21 @@
     color: #D8000C;
     background-color: #FFBABA;
   }
-
-
+  .galeria {
+    display: flex;
+    width: 600px;
+    height: 430px;
+  }
+  .galeria img {
+    width: 0px;
+    flex-grow: 1;
+    object-fit: cover;
+    opacity: .8;
+    transition: .5s ease;
+  }
+  .galeria img:hover {
+    cursor: crosshair;
+    width: 300px;
+    opacity: 1;
+    filter: contrast(120%);
+  }  
