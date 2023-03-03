@@ -35,11 +35,25 @@ modelos = {
 
 @app.route('/')
 def index():
+    """Ruta principal de la aplicación.
+
+    Returns:
+        render_template: Renderiza la página principal de la aplicación.
+    """
     return render_template('index.html')
 
 
 @app.route("/registro", methods = ["GET", "POST"])
 def registro():
+    """Ruta para el registro de usuarios.
+
+    Returns:
+        render_template: Renderiza la página de registro.
+        Si el usuario ya está registrado, le redirige a la página de login.
+        Si el usuario se ha registrado correctamente, le redirige a la página de login exitoso.
+        Inserta al usuario en la base de datos.
+        Devuelve un mensaje de error si el email ya está registrado o la contraseña es demasiado corta.
+    """
     if request.method == "POST":
         session['email'] = request.form.get("email")
         session['nombre'] = request.form.get("username")
@@ -54,6 +68,13 @@ def registro():
 
 @app.route("/login", methods = ["GET", "POST"])
 def login():
+    """Ruta para el login de usuarios.
+
+    Returns:
+        render_template: Renderiza la página de login.
+        Si el usuario no está registrado o ha metido mal la contraseña, le redirige a la página de login incorrecto.
+        Si el usuario se ha logueado correctamente, le redirige a la página de login exitoso.
+    """
     if request.method == "POST":
         email = request.form.get("email")
         password = request.form.get("password")
@@ -66,6 +87,11 @@ def login():
 
 @app.route('/contr_olvidada', methods=['GET', 'POST'])
 def contr_olvidada():
+    """Ruta para la recuperación de contraseñas.
+
+    Returns:
+        render_template: Renderiza la página de recuperación de contraseñas.
+    """
     # Obtener la contraseña del usuario de la sesión
     password = session.get('password')
     password_length = len(password) if password else 0
@@ -99,18 +125,33 @@ def contr_olvidada():
 
 @app.route('/mostrar_contrasena')
 def mostrar_contrasena():
+    """Ruta para mostrar la contraseña del usuario.
+
+    Returns:
+        render_template: Renderiza la página de mostrar contraseña, donde se muestra la contraseña del usuario.
+    """
     password = session.get('password')
     return render_template('mostrar_contrasena.html', password=password)
 
 
 @app.route('/principal', methods=['GET', 'POST'])
 def principal():
+    """Ruta a la página principal de la aplicación.
+
+    Returns:
+        render_template: Renderiza la página principal de la aplicación.
+    """
     return render_template('principal.html', nombre = session['nombre'])
 
 
 @app.route('/transcriptor', methods=['GET', 'POST'])
 def transcriptor():
-     if request.method == 'POST':
+    """Ruta a la página de transcripción de audio, donde se muestra el botón para subir el archivo de audio.
+
+    Returns:
+        render_template: Renderiza la página de transcripción de audio.
+    """
+    if request.method == 'POST':
          file = request.files['file']
          size = request.form['size']
          if file and file.filename.lower().endswith(('.mp4', '.mov', '.avi')):
@@ -127,11 +168,17 @@ def transcriptor():
              print('Transcripción completada')
              sql.guardar_transcripcion(session['email'], session['transcripcion'], filename)
              return redirect(url_for('resultado_transcripcion'))
-     else:
+    else:
          return render_template('transcriptor.html', nombre = session['nombre'])
 
 @app.route('/resultado_transcripcion')
 def resultado_transcripcion():
+    """Muestra el resultado de la transcripción del archivo de audio.
+
+    Returns:
+        render_template: Renderiza la página de resultado de la transcripción del archivo de audio.
+        Ahí se muestran el resultado de la transcripción y el historial de transcripciones del usuario.
+    """
     historial = sql.consultar_filenames(session['email'])
     historial = {i+1: historial[i] for i in range(0, len(historial))}
     return render_template('resultado_transcripcion.html',
@@ -140,6 +187,11 @@ def resultado_transcripcion():
 
 @app.route('/descargar_transcripcion')  
 def descargar_transcripcion():
+    """Descarga el archivo de audio en un archivo de texto.
+
+    Returns:
+        respuesta: Archivo de texto con la transcripción del archivo de audio.
+    """
     # Carga el contenido de la transcripción
     contenido = session['transcripcion']
 
@@ -154,12 +206,23 @@ def descargar_transcripcion():
 
 @app.route('/resumen')
 def resumen():
+    """Ruta a la página de resumen de texto, donde se muestra el resumen del texto más reciente del usuario.
+
+    Returns:
+        render_template: Renderiza la página de resumen de texto.
+    """
     texto = sql.consultar_ult_texto(session['email'])
     resumen = nlp.hacer_resumen(texto)
     return render_template('resumen.html', resumen = resumen)
 
 @app.route('/estadisticas')
 def estadisticas():
+    """Ruta a la página de estadísticas, donde se muestran las estadísticas de los textos transcritos por el usuario.
+    Entre las estadísticas se encuentran: la nube de palabras, el histograma de frecuencia de palabras y la longitud promedio de las palabras.
+    
+    Returns:
+        render_template: Renderiza la página de estadísticas.
+    """
     texto = sql.consultar_textos(session['email'])
     # muestra una tabla con las palabras más usadas y su frecuencia (obligatorio, no tenemos ninguna tabla de sql!)
     

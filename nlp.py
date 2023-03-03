@@ -10,6 +10,14 @@ from nltk.tokenize import sent_tokenize, word_tokenize
 from heapq import nlargest
 
 def hacer_resumen(texto):
+    """Realiza un resumen del texto.
+
+    Args:
+        texto (str): Texto del que se quiere hacer el resumen.
+
+    Returns:
+        resumen (str): Resumen del texto.
+    """
     n=3
     oraciones = sent_tokenize(texto)
     palabras = word_tokenize(texto.lower())
@@ -36,6 +44,14 @@ def hacer_resumen(texto):
     return resumen
 
 def wordcloud(texto:str):
+    """Genera una imagen de un wordcloud a partir de un texto.
+
+    Args:
+        texto (str): Texto del que se quiere generar el wordcloud.
+
+    Returns:
+        img_base64 (base64): Imagen del wordcloud en formato base64.
+    """
     ### Wordcloud ###
     wordcloud = WordCloud(width=400, height=150, background_color='white').generate(texto)
 
@@ -54,6 +70,16 @@ def wordcloud(texto:str):
     return img_base64
 
 def generar_histograma(texto, n=10):
+    """Genera un histograma de las palabras más frecuentes en un texto.
+
+    Args:
+        texto (str): Texto del que se quiere generar el histograma.
+        n (int, optional): Por defecto 10. Número de palabras que se quieren mostrar en el histograma.
+
+    Returns:
+        img_base64 (base64): Imagen del wordcloud en formato base64.
+        frecuencia_palabras (dict): Diccionario con las palabras más frecuentes y su frecuencia.
+    """
     # Limpiar texto de signos de puntuación y números
     texto_limpio = re.sub('[^A-Za-zñÑáéíóúÁÉÍÓÚ\s]+', '', texto)
 
@@ -85,6 +111,14 @@ def generar_histograma(texto, n=10):
     return img_base64, frecuencia_palabras
 
 def average_word_length(texto):
+    """Calcula la longitud media de las palabras de un texto.
+
+    Args:
+        texto (str): Texto del que se quiere calcular la longitud media de las palabras.
+
+    Returns:
+        longitud_media (float): Longitud media de las palabras del texto.
+    """
     palabras = word_tokenize(texto.lower())
     stopwords_es = set(stopwords.words('spanish'))
     palabras_filtradas = [palabra for palabra in palabras if palabra not in stopwords_es]
@@ -93,4 +127,12 @@ def average_word_length(texto):
     return longitud_media
 
 def n_frases(texto):
+    """Calcula el número de frases de un texto.
+
+    Args:
+        texto (str): Texto del que se quiere calcular el número de frases.
+
+    Returns:
+        Número de frases del texto.
+    """
     return len(texto.split('.'))

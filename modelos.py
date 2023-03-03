@@ -3,6 +3,11 @@ import pickle
 import os
 
 def main():
+    """Carga los modelos de whisper y los guarda en un archivo .pkl para que se carguen más rápido.
+
+    Returns:
+        None
+    """
     if not os.path.exists('modelos'):
         os.mkdir('modelos')
     
