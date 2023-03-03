@@ -8,7 +8,6 @@
     <h2 class="text--gray pb1 border--bottom">Iniciar sesión</h2>
     {%if msg%}
     <h3 class="text--gray pb1 border--bottom">{{msg}}</h3>
-    <button class="btn btn--secondary" href="{{url_for('contr_olvidada')}}">Se me ha olvidado la contraseña</button>
     {%endif%}
     <form action = "{{url_for('login')}}" method="POST">
       <input class="form-control mb1" id='email' name='email' type="email" placeholder="Dirección de correo">

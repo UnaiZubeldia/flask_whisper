@@ -5,9 +5,6 @@ import sql
 import os
 import modelos
 import pickle
-import base64
-
-
 
 # Necesario ffmeg
 # https://es.wikihow.com/instalar-FFmpeg-en-Windows
@@ -128,21 +125,16 @@ def transcriptor():
              resultado = model.transcribe(mp3_path)
              session['transcripcion'] = resultado['text']
              print('Transcripción completada')
-             # Se guarda resultado['text'] en la base de datos para analizar ese texto
              sql.guardar_transcripcion(session['email'], session['transcripcion'], filename)
              return redirect(url_for('resultado_transcripcion'))
-        # else:
-        #    return render_template('transcriptor.html', error="Error: Debe seleccionar un archivo de video válido (mp4, mov o avi)")
      else:
          return render_template('transcriptor.html', nombre = session['nombre'])
 
 @app.route('/resultado_transcripcion')
 def resultado_transcripcion():
     historial = sql.consultar_filenames(session['email'])
-    # add numeration to the filenames as a dictionary
     historial = {i+1: historial[i] for i in range(0, len(historial))}
-
-    return render_template('resultado_transcripcion.html', 
+    return render_template('resultado_transcripcion.html',
                             transcripcion = session['transcripcion'],
                             historial = historial)
 

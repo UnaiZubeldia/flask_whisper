@@ -1,18 +1,20 @@
 {% extends 'layout.html' %}
 {% block titulo %} Bienvenido {% endblock %}
 {%block cuerpo%}
-        <div class="bg--dark-gray align--center pt3 pb3">
-            <div class="container pt2 pb2">
-                <p class="h3 text--white mb1 bold">¡Inicia sesión!</p>
-                <p class="text--white mb3">Necesitas estar registrado para acceder a nuestras funcionalidades.</p>
-                <a class="btn btn--secondary" href="{{url_for('registro')}}">Registrarse</a>
-                <a class="btn btn--secondary" href="{{url_for('login')}}">Iniciar sesión</a>
-            </div>
-        </div>
-        <section class="galeria">
-            <img src="/static/imagenes/git.png" alt="Foto que forma parte de una galería de imágenes">
-            <img src="/static/imagenes/git.png" alt="Foto que forma parte de una galería de imágenes">
-            <img src="/static/imagenes/git.png" alt="Foto que forma parte de una galería de imágenes">
-            <img src="/static/imagenes/git.png" alt="Foto que forma parte de una galería de imágenes">
-        </section>
+<br>
+<section class="galeria">
+    <img src="/static/imagenes/histograma.jpg" alt="Foto que forma parte de una galería de imágenes: histograma de frecuencias">
+    <img src="/static/imagenes/bart.jpg" alt="Foto que forma parte de una galería de imágenes: estadísticas">
+    <img src="/static/imagenes/wordcloud.jpg" alt="Foto que forma parte de una galería de imágenes: wordcloud">
+    <img src="/static/imagenes/contrasena.jpg" alt="Foto que forma parte de una galería de imágenes: recuperador de contraseñas olvidadas">
+</section>
+<br>
+<div class="bg--dark-gray align--center pt3 pb3">
+    <div class="container pt2 pb2">
+        <p class="h3 text--white mb1 bold">¡Inicia sesión!</p>
+        <p class="text--white mb3">Necesitas estar registrado para acceder a nuestras funcionalidades.</p>
+        <a class="btn btn--secondary" href="{{url_for('registro')}}">Registrarse</a>
+        <a class="btn btn--secondary" href="{{url_for('login')}}">Iniciar sesión</a>
+    </div>
+</div>
 {%endblock%}

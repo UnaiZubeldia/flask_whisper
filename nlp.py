@@ -33,7 +33,6 @@ def hacer_resumen(texto):
     # Obtener las oraciones con los puntajes más altos.
     oraciones_resumen = nlargest(n, puntajes, key=puntajes.get)
     resumen = ' '.join([oraciones[i] for i in sorted(oraciones_resumen)])
-
     return resumen
 
 def wordcloud(texto:str):
@@ -69,23 +68,20 @@ def generar_histograma(texto, n=10):
     palabras = [palabra for palabra, frec in frecuencia.most_common(n)]
     frecuencias = [frec for palabra, frec in frecuencia.most_common(n)]
 
-
     # Convertir imagen a base64
     img = BytesIO()
     plt.bar(palabras, frecuencias)
     plt.title("Histograma de palabras")
     plt.xlabel("Palabras")
     plt.ylabel("Frecuencia")
-    # set 90 degree rotation on tick labels
-    plt.xticks(rotation=90)
+    plt.xticks(rotation=45)
+    plt.subplots_adjust(bottom=0.3)
     plt.savefig(img, format='png')
     img.seek(0)
     plt.close()
     img_base64 = base64.b64encode(img.getvalue()).decode()
 
     frecuencia_palabras = dict(frecuencia.most_common(n))
-
-
     return img_base64, frecuencia_palabras
 
 def average_word_length(texto):

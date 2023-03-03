@@ -10,22 +10,22 @@
     <br><br>
     <h3> WordCloud </h3>
     <img src="data:image/png;base64,{{ wc }}" alt="Imagen">
-    <br><br>
+    <br><br><br>
     <h3> Histograma de las palabras más frecuentes</h3>
     <img src="data:image/png;base64,{{ hist }}" alt="Imagen">
-    <br><br>
-    <h3>¡Aquí van unas estadísticas! </h3>
-    <p>El número de palabras es: {{total_palabras}}</p>
-    <p>El número de palabras únicas es: {{total_palabras_unicas}}</p>
-    <p>La longitud media por palrabas es {{longitud}}</p>
-    <p>El número de frases es {{n_frases}}</p>
+    <br><br><br>
+    <h3>¡Aquí van unas estadísticas!</h3>
+    <p>Has transcrito {{total_palabras}} palabras en total.</p>
+    <p>Hay {{total_palabras_unicas}} palabras únicas.</p>
+    <p>De media las palabras tienen {{longitud}} letras.</p>
+    <p>El texto se divide en {{n_frases}} frases.</p>
     <div>
 
 
     <br>
     <br>
     </div>
-            
+    <h3>Y aquí está la tabla con las palabras más repetidas:</h3>
             <table class="t">
                 <tr>
                     <th>Palabra</th>

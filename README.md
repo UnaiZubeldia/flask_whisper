@@ -1,5 +1,12 @@
 # Aplicación desarrollada en Flask por Unai Zubeldia y Jon Ortega
 
+
+## Información importante
+
+Para que las funcionalidades de la aplicación funcionen correctamente, el usuario debe tener instalado ffpeg en su dispositivo. Esta instalación se realiza siguiendo los pasos descritos en el siguiente enlace: https://es.wikihow.com/instalar-FFmpeg-en-Windows
+
+## Detalles de la aplicación
+
 La aplicación exige que el usuario se registre. Su funcionalidad principal consiste en la transcripción de un fichero audio a texto, para lo cual emplea el modelo Whisper desarrollado por OpenAI.
 
 Además, dispone de funcionalidades adicionales. Por ejemplo, en base al histórico de audios transcritos, muestra estadísticas que informan sobre la temática, las palabras más frecuentes o relevantes... empleadas en los audios transcritos por el usuario.
