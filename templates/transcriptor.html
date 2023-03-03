@@ -2,13 +2,12 @@
 
 {% block titulo %} Añadir fichero {% endblock %}
 
-
 {% block cuerpo %}
 <div class="pt1 pb1 bg--lightest-gray">
 <div class="container pt3 pb3">
 <section class="pb4">
-    <h2 class="text--gray pb1 border--bottom">Subir video</h2>
-    <form class="form" method="post" enctype="multipart/form-data" action = '{{url_for("transcriptor")}}'>
+    <h2 class="text--gray pb1 border--bottom">Sube un vídeo</h2>
+    <form class="form" method="post" enctype="multipart/form-data" action = '{{url_for("transcriptor")}}' onsubmit='loading()'>
         <input type="file" name="file">
         <br>
         <div class="select mb1">
@@ -18,9 +17,21 @@
                 <option>base</option>
             </select>
         </div>
-        <button class="btn btn--default">Empezar transcripción</button>
+        <button class="btn btn--default" type="submit">Empezar transcripción</button>
     </form>
+    <span class="loader"></span>
 </section>
+<div class="border--bottom pb2 mb2">
+    <h3>Sobre los modelos</h3>
+    <ul><b>Modelo "tiny"</b>
+        <li>Tamaño: Menos de 1 MB</li>
+        <li>Descripción: Modelo pequeño y rápido para reconocimiento de voz básico</li>
+      </ul>
+      <ul><b>Modelo "base"</b>
+        <li>Tamaño: Alrededor de 50 MB</li>
+        <li>Descripción: Modelo más grande y preciso para reconocimiento de voz avanzado</li>
+      </ul>
+</div>
 </div>
 </div>
 

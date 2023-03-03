@@ -4,18 +4,16 @@
 
 {% block cuerpo %}
 <div class="container pt3 pb3">
-
-    <h2>transcripción completada</h2>
-    <br>
+    <h2>Transcripción completada</h2>
+    <br><br>
+    <h3> ¿Te interesa guardarla para otro momento? ¡Pincha aquí y se te guardará! </h3>
     <a class="btn btn--default" href="{{ url_for('descargar_transcripcion') }}">Descargar transcripción</a>
-    <br>
-
+    <br><br>
     <h3> ¿Mucho texto? No hay problema, ¡te lo resumimos! </h3>
     <a class="btn btn--default" href="{{url_for('resumen')}}">Resumen</a>
-    <br>
+    <br><br>
     <h3> ¿Quieres ver más? ¡Aquí van unas estadísticas! </h3>
     <a class="btn btn--default" href="{{url_for('estadisticas')}}">Estadísticas y gráficos</a>
 </div>
-
 
 {% endblock %}

@@ -1,0 +1,22 @@
+{%extends 'layout.html'%}
+
+{%block titulo%}Error{%endblock%}
+
+
+{%block cuerpo%}
+<div class="pt1 pb1 text--white bg--tertiary-color">
+<div class="bg--dark-gray align--center pt3 pb3">
+    <div class="container pt2 pb2">
+        <p class="h3 text--white mb1 bold">Error</p>
+        {%if msg_error%}
+        <p class="text--white mb3">{{msg_error}}</p>
+        {%endif%}
+        {%if not msg_error.startswith('No te has') %}
+        <a class="btn btn--secondary" href="{{url_for('contr_olvidada')}}">Se me ha olvidado la contraseña</a>
+        {%endif%}
+        <a class="btn btn--secondary" href="{{url_for('login')}}">Volver a intentarlo</a>
+        <a class="btn btn--secondary" href="{{url_for('registro')}}">Registrarse</a>
+    </div>
+</div>
+</div>
+{%endblock%}

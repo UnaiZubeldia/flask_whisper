@@ -1,6 +1,7 @@
 import sqlite3 as sqlite
 import os
 import pandas as pd
+import matplotlib.pyplot as plt
 
 
 
@@ -53,16 +54,9 @@ def comprobar_pwd(email:str, password:str):
     cur.execute("SELECT password FROM users WHERE email = ?", (email,)) 
     pw = cur.fetchone()[0]
     con.close()
+    print(password)
+    print(pw)
     return password == pw
-
-def consultar_nombre(email:str):
-    con = sqlite.connect("database.db")
-    cur = con.cursor()
-    cur.execute("SELECT nombre FROM users WHERE email = ?", (email,)) 
-    nombre = cur.fetchone()[0]
-    con.close()
-    return nombre
-
 
 
 def guardar_transcripcion(email:str, texto:str):

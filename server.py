@@ -6,8 +6,10 @@ import os
 import modelos
 import pickle
 
-#necesario ffmeg
+
+# Necesario ffmeg
 # https://es.wikihow.com/instalar-FFmpeg-en-Windows
+
 
 if not os.path.exists('modelos'):
     modelos.main()
@@ -24,15 +26,12 @@ modelos = {
 
 
 
-
 # PENDIENTE:
-# - Que se guarde el login en la bbdd
-# - Comprobar que el usuario está logueado para dejarle acceder a la transcripción
-# - Falta poner algo (algún meme de programación?) en el loading del modelo
-# - Falta la galería de imágenes, que se podría hacer al elegir el modelo, en los memes del loading o al enseñar los gráficos
-# - Se podria hacer que se compruebe si existe la carpeta modelos con los 3 modelos dentro y si no existe que se descarguen
+# - Falta poner algo (loading.gif) en el loading del modelo
 # - Youtube to mp3 (que la ruta incluya el link de youtube, con rutas dinámicas)
-# - Que se pueda elegir el idioma del resumen
+# - Que te haga el resumen + que carguen los gráficos (wordcloud e histograma de frecuencias de palabras)
+
+# - Falta meter una galería de imágenes (Jon)
 
 
 @app.route('/')
@@ -43,32 +42,71 @@ def index():
 @app.route("/registro", methods = ["GET", "POST"])
 def registro():
     if request.method == "POST":
-        email = request.form.get("email")
-        username = request.form.get("username")
-        password = request.form.get("password")
-        session['nombre'] = username
-        sql.insert_user(email, username, password)
-        return render_template("login_exitoso.html", nombre = username)
+        session['email'] = request.form.get("email")
+        session['nombre'] = request.form.get("username")
+        session['password'] = request.form.get("password")
+        if sql.email_existe(session['email']):
+            return render_template('login.html', msg = '¡El email ya está registrado!')
+        if len(session['password']) < 5:
+            return render_template('registro.html', msg = '¡La contraseña debe tener al menos 5 caracteres!')
+        sql.insert_user(session['email'], session['nombre'], session['password'])
+        return render_template("login_exitoso.html", nombre = session['nombre'])
     return render_template("registro.html")
 
 @app.route("/login", methods = ["GET", "POST"])
 def login():
     if request.method == "POST":
         email = request.form.get("email")
-        session['email'] = email
         password = request.form.get("password")
         if not sql.email_existe(email):
-            return render_template('wrong_email.html')
+            return render_template('wrong_login.html', msg_error = 'No te has registrado aún')
         if not sql.comprobar_pwd(email, password):
-            return render_template('wrong_pwd.html')
-        nombre = sql.consultar_nombre(email)
-        session['nombre'] = nombre
+            return render_template('wrong_login.html', msg_error = 'Contraseña incorrecta')
         return render_template('login_exitoso.html', nombre = session['nombre'])
     return render_template("login.html")
 
-@app.route('/login_exitoso', methods=['GET', 'POST'])
-def login_exitoso():
-    return render_template('login_exitoso.html', nombre = session['nombre'])
+@app.route('/contr_olvidada', methods=['GET', 'POST'])
+def contr_olvidada():
+    # Obtener la contraseña del usuario de la sesión
+    password = session.get('password')
+    password_length = len(password) if password else 0
+    
+    # Si el usuario envió un formulario, comprobar las letras
+    letras_correctas = [None] * password_length
+    mensaje = ""
+    if request.method == 'POST':
+        aciertos = []
+        fallos = []
+        for i in range(password_length):
+            letra = request.form.get(f'letra-{i}')
+            if letra is None:
+                continue
+            elif letra == password[i]:
+                letras_correctas[i] = True
+                aciertos.append(f"{i+1}")
+            else:
+                letras_correctas[i] = False
+                fallos.append(f"{i+1}")
+        session['letras_correctas'] = letras_correctas
+        acierto_completo = all(letras_correctas)
+        mensaje = "Has acertado la letra " + ", ".join(aciertos) if aciertos else ""
+        if fallos:
+            mensaje += ". Has fallado la letra " + ", ".join(fallos)
+        if acierto_completo:
+            mensaje = "¡Felicidades! Ya te has acordado de tu contraseña!"
+        return render_template('contr_olvidada.html', password_length=password_length, letras_correctas=letras_correctas, mensaje=mensaje)
+    
+    return render_template('contr_olvidada.html', password_length=password_length, letras_correctas=letras_correctas, mensaje=mensaje)
+
+@app.route('/mostrar_contrasena')
+def mostrar_contrasena():
+    password = session.get('password')
+    return render_template('mostrar_contrasena.html', password=password)
+
+
+@app.route('/principal', methods=['GET', 'POST'])
+def principal():
+    return render_template('principal.html', nombre = session['nombre'])
 
 
 @app.route('/transcriptor', methods=['GET', 'POST'])
@@ -87,12 +125,16 @@ def transcriptor():
              session['transcripcion'] = resultado['text']
              print('Transcripción completada')
              # Se guarda resultado['text'] en la base de datos para analizar ese texto
-             sql.guardar_transcripcion(session['email'], resultado['text'])
-             return render_template('resultado_transcripcion.html')
+             sql.guardar_transcripcion(session['email'], session['transcripcion'])
+             return redirect(url_for('resultado_transcripcion'))
         # else:
         #    return render_template('transcriptor.html', error="Error: Debe seleccionar un archivo de video válido (mp4, mov o avi)")
      else:
          return render_template('transcriptor.html')
+
+@app.route('/resultado_transcripcion')
+def resultado_transcripcion():
+    return render_template('resultado_transcripcion.html', transcripcion = session['transcripcion'])
 
 @app.route('/descargar_transcripcion')  
 def descargar_transcripcion():
@@ -108,29 +150,21 @@ def descargar_transcripcion():
 
     return respuesta
 
-
-
 @app.route('/resumen')
 def resumen():
     session['email'] = sql.provisional() # PROVISIONAL
     texto = sql.consultar_ult_texto(session['email'])
     resumen = sql.resumidor(texto)
-    return render_template('resumen.html', resumen = resumen)
+    return render_template('resumen.html')
 
 @app.route('/estadisticas')
 def estadisticas():
     session['email'] = sql.provisional() # PROVISIONAL
     textos = sql.consultar_textos(session['email'])
+    # muestra una tabla con las palabras más usadas y su frecuencia (obligatorio, no tenemos ninguna tabla de sql!)
     sql.wordcloud(textos) # genera la imagen del wordcloud y la guarda en la carpeta static
     sql.histograma(textos) # genera la imagen del histograma y la guarda en la carpeta static
     return render_template('estadisticas.html')
-
-@app.route('/logout')
-def logout():
-    session.pop('email', None)
-    session.pop('nombre', None)
-    return redirect(url_for('index'))
-
 
 if __name__ == '__main__':
     app.run(debug=True)

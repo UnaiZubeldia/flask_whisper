@@ -6,10 +6,14 @@
 <div class="container pt3 pb3">
   <section class="pb4">
     <h2 class="text--gray pb1 border--bottom">Iniciar sesión</h2>
+    {%if msg%}
+    <h3 class="text--gray pb1 border--bottom">{{msg}}</h3>
+    <button class="btn btn--secondary" href="{{url_for('contr_olvidada')}}">Se me ha olvidado la contraseña</button>
+    {%endif%}
     <form action = "{{url_for('login')}}" method="POST">
-      <input class="form-control mb1" id='email' type="email" placeholder="Dirección de correo">
-      <input class="form-control mb1" id='password' type="password" placeholder="Contraseña">
-      <button class="btn btn--default" type="submit">Entrar</button>
+      <input class="form-control mb1" id='email' name='email' type="email" placeholder="Dirección de correo">
+      <input class="form-control mb1" id='password' name='password' type="password" placeholder="Contraseña">
+      <button class="btn btn--default" id="submit-button" type="submit">Entrar</button>
     </form>
   </section>
   </div>

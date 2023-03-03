@@ -1,0 +1,13 @@
+{% extends 'layout.html' %}
+
+{% block titulo %} Mostrar contraseña {% endblock %}
+
+{% block cuerpo %}
+<div class="bg--dark-gray align--center pt3 pb3">
+  <div class="container pt2 pb2">
+    <p class="h3 text--white mb1 bold">Tu contraseña es:</p>
+    <p class="h2 text--white mb3 bold">{{ password }}</p>
+    <a class="h4 text--white mb1 bold" href="{{ url_for('login') }}">Iniciar sesión</a></li>
+  </div>
+</div>
+{% endblock %}

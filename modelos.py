@@ -5,6 +5,9 @@ import os
 def main():
     if not os.path.exists('modelos'):
         os.mkdir('modelos')
+    
+    print('Cargando modelos rápidamente... ¡Ahora se iniciará la aplicación!')
+    
     tiny_model = whisper.load_model('tiny')
     base_model = whisper.load_model('base')
 

@@ -1,32 +1,10 @@
-{%extends 'layout.html'%}
-
-{%block titulo%}Inicio{%endblock%}
+{% extends 'layout.html' %}
+{% block titulo %} Bienvenido {% endblock %}
 {%block cuerpo%}
-<main>
-    <div class="container--lg pt1 pb1">
-        <blockquote class="blockquote">¡Bienvenido {{nombre}}!</blockquote>
-
-        <div class="grid-row grid-row--center">
-            <div class="grid-column mt3 mb2 order-2">
-                <div class="border--bottom pb2 mb2">
-                    <h2>Transcribir videos</h2>
-                    <p>Texto que explique las ventajas de usar el transcriptor bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, </p>
-                </div>
-                <section class="pb4 align--center">
-                    <a class="btn btn--default" href="{{url_for('transcriptor')}}">Transcribir video</a>
-                    <br>
-                    <br>
-                    <p class="bold">Modelo Whisper de Open AI</p>
-                </section>
- 
+        <div class="bg--dark-gray align--center pt3 pb3">
+            <div class="container pt2 pb2">
+                <p class="h3 text--white mb1 bold">¡Un placer tenerte por aquí, {{nombre.capitalize()}}!</p>
+                <a class="btn btn--secondary" href="{{url_for('principal')}}">¡Empieza a probar nuestras funcionalidades!</a>
             </div>
-            <div class="grid-column span-1"></div>
-            <div class="grid-column mt3 mb2 order-1 reveal-on-scroll is-revealing">
-                <img src="../static/imagenes/writer.gif" alt="writing data">
         </div>
-
-    </div>
-
-
-
 {%endblock%}

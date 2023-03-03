@@ -1,0 +1,29 @@
+{% extends 'layout.html' %}
+
+{% block titulo %} Contraseña olvidada {% endblock %}
+
+{% block cuerpo %}
+<div class="bg--dark-gray align--center pt3 pb3">
+  <div class="container pt2 pb2">
+    <p class="h3 text--white mb1 bold">Probador de contraseñas</p>
+    <p class="text--white mb3">Tu contraseña tiene {{ password_length }} caracteres. ¡Prueba a adivinarla!</p>
+    <form method="POST">
+      {% for i in range(password_length) %}
+        <input type="text" name="letra-{{i}}" maxlength="1" size="1" {% if letras_correctas[i] is not none %}class="{% if letras_correctas[i] %}correcta{% else %}incorrecta{% endif %}"{% endif %}>
+      {% endfor %}
+      <br><br>
+      <button class="btn btn--outline" type="submit">Comprobar letras</button>
+      {% if mensaje and not acierto_completo %}
+        <br><br>
+        <p class="text--white mb3">{{ mensaje }}</p>
+      {% endif %}
+      {% if acierto_completo %}
+        <br><br>
+        <p class="text--white mb3">{{ mensaje }}</p>
+      {% endif %}
+    </form>
+    <br><br>
+    <a class="btn btn--secondary" href="{{url_for('mostrar_contrasena')}}">Mostrar contraseña</a>
+  </div>
+</div>
+{% endblock %}

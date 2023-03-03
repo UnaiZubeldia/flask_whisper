@@ -3,3 +3,30 @@
   padding: 20px;
   text-align: justify;
   text-justify: inter-word;}
+
+  @keyframes loader {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+  .loader::after {
+    opacity: 0;
+    animation-delay: 1s;
+  }
+  .loader::before {
+    animation: loader 2s linear infinite;
+    content: '';
+    border: 2px solid #FFF;
+    width: 48px;
+    height: 48px;
+    position: absolute;
+    border-radius: 50%;
+  }
+  .loader-active::before {
+    animation: loader 2s linear infinite;
+  }  

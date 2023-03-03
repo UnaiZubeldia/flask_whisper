@@ -1,0 +1,38 @@
+{%extends 'layout.html'%}
+
+{%block titulo%}Inicio{%endblock%}
+{%block cuerpo%}
+<main>
+    <div class="container--lg pt1 pb1">
+        <blockquote class="blockquote">¡Hola {{nombre.capitalize()}}!</blockquote>
+
+        <div class="grid-row grid-row--center">
+            <div class="grid-column mt3 mb2 order-2">
+                <div class="border--bottom pb2 mb2">
+                    <h2>Transcribir videos</h2>
+                    <p>
+                        ¿Te molesta interrumpir tu trabajo para <b>escuchar audios de WhatsApp</b>?
+                        ¿Te gustaría poder <b>transcribir podcasts y videos</b> para "leerlos" en tu tiempo libre?
+                        <br> <br>
+                        <b>¡El modelo Whisper de OpenAI es la solución que estás buscando!</b> <br>
+                        Con Whisper, puedes convertir mensajes de voz y grabaciones de audio en texto en segundos,
+                        lo que te permite leerlos en tu pantalla en cualquier momento y lugar.
+                        <br> <br>
+                        ¡Prueba ahora el modelo Whisper y experimenta la facilidad y eficiencia de manejar tus comunicaciones y trabajos diarios!
+                    </p>
+                </div>
+                <section class="pb4 align--center">
+                    <a class="btn btn--default" href="{{url_for('transcriptor')}}">Transcribir vídeo</a>
+                    <br>
+                    <br>
+                    <p class="bold"><em>Modelo Whisper desarrollado por Open AI.</em></p>
+                </section>
+            </div>
+            <div class="grid-column span-1"></div>
+                <img src="/static/imagenes/listening.gif" alt="listening to the audio and writing the content...">
+            </div>
+            <div class="grid-column mt3 mb2 order-1 reveal-on-scroll is-revealing"> </div>
+            </div>
+    </div>
+</main>
+{%endblock%}
