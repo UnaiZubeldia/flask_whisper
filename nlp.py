@@ -10,7 +10,7 @@ from nltk.tokenize import sent_tokenize, word_tokenize
 from heapq import nlargest
 
 def hacer_resumen(texto):
-    n=1
+    n=3
     oraciones = sent_tokenize(texto)
     palabras = word_tokenize(texto.lower())
     
@@ -69,17 +69,18 @@ def generar_histograma(texto, n=10):
     palabras = [palabra for palabra, frec in frecuencia.most_common(n)]
     frecuencias = [frec for palabra, frec in frecuencia.most_common(n)]
 
+
+    # Convertir imagen a base64
+    img = BytesIO()
     plt.bar(palabras, frecuencias)
     plt.title("Histograma de palabras")
     plt.xlabel("Palabras")
     plt.ylabel("Frecuencia")
     # set 90 degree rotation on tick labels
     plt.xticks(rotation=90)
-
-    # Convertir imagen a base64
-    img = BytesIO()
     plt.savefig(img, format='png')
     img.seek(0)
+    plt.close()
     img_base64 = base64.b64encode(img.getvalue()).decode()
 
     frecuencia_palabras = dict(frecuencia.most_common(n))

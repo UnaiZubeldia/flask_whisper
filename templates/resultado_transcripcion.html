@@ -3,6 +3,15 @@
 {% block titulo %} Análisis de la transcripción {% endblock %}
 
 {% block cuerpo %}
+<style>
+    table, th, td {
+      border: 1px solid black;
+      text-align: center;
+    }
+    th, td {
+        padding: 5px;
+    }
+</style>
 <div class="container pt3 pb3">
 <div class="pb4 align--center">
     <div class="success-msg">
@@ -22,9 +31,9 @@
     <br><br>
 
     <h3>Historial</h3>
-    <table>
+    <table class="t">
         <tr>
-            <th>número |</th>
+            <th>número</th>
             <th> nombre de fichero</th>
         </tr>
         {% for n, name in historial.items() %}

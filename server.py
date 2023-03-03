@@ -163,7 +163,6 @@ def descargar_transcripcion():
 @app.route('/resumen')
 def resumen():
     texto = sql.consultar_ult_texto(session['email'])
-    print(texto)
     resumen = nlp.hacer_resumen(texto)
     return render_template('resumen.html', resumen = resumen)
 
