@@ -4,13 +4,51 @@
 
 
 {%block cuerpo%}
+<div class="container pt3 pb3">
+<div class="pb4 align--center">
+    <br><br>
+    <h3> WordCloud </h3>
+    <img src="data:image/png;base64,{{ wc }}" alt="Imagen">
+    <br><br>
+    <h3> Histograma de las palabras más frecuentes</h3>
+    <img src="data:image/png;base64,{{ hist }}" alt="Imagen">
+    <br><br>
+    <h3>¡Aquí van unas estadísticas! </h3>
+    <p>El número de palabras es: {{total_palabras}}</p>
+    <p>El número de palabras únicas es: {{total_palabras_unicas}}</p>
+    <p>La longitud media por palrabas es {{longitud}}</p>
+    <p>El número de frases es {{n_frases}}</p>
+            
+            <table>
+                <tr>
+                    <th>Palabra</th>
+                    <th>Frecuencia</th>
+                </tr>
+                {% for key, value in frecuencia_palabras.items() %}
+                <tr>
+                    <td>{{key}}</td>
+                    <td>{{value}}</td>
+                </tr>
+                {% endfor %}
+            </table>
 
-<img src="{{url_for('static', filename='img/wordcloud.png')}}" alt="Wordcloud de las palabras de los textos del usuario" class="img-fluid">
-<img src="{{url_for('static', filename='img/histograma.png')}}" alt="Histograma de frecuencias de las palabras de los textos del usuario" class="img-fluid">
+
 <br>
-<a href="{{url_for('resumen')}}">Resumen</a>
-<a href="{{url_for('resultado_transcripcion')}}">Volver a la transcripción completa</a>
-<a href="{{url_for('principal')}}">Volver a la página principal</a>
-<a href="{{url_for('transcriptor')}}">Volver a subir un nuevo vídeo</a>
+<table>
+    <tr>
+      <td><a href="{{url_for('resumen')}}">Resumen</a></td>
+    </tr>
+    <tr>
+      <td><a href="{{url_for('resultado_transcripcion')}}">Volver a la transcripción completa</a></td>
+    </tr>
+    <tr>
+      <td><a href="{{url_for('principal')}}">Volver a la página principal</a></td>
+    </tr>
+    <tr>
+      <td><a href="{{url_for('transcriptor')}}">Volver a subir un nuevo vídeo</a></td>
+    </tr>
+  </table>
 
+</div>
+</div>
 {%endblock%}

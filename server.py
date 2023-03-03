@@ -1,10 +1,12 @@
 from flask import Flask, render_template, request, redirect, url_for, session, make_response
 from pydub import AudioSegment
-import whisper
+import nlp
 import sql
 import os
 import modelos
 import pickle
+import base64
+
 
 
 # Necesario ffmeg
@@ -130,7 +132,7 @@ def transcriptor():
         # else:
         #    return render_template('transcriptor.html', error="Error: Debe seleccionar un archivo de video válido (mp4, mov o avi)")
      else:
-         return render_template('transcriptor.html')
+         return render_template('transcriptor.html', nombre = session['nombre'])
 
 @app.route('/resultado_transcripcion')
 def resultado_transcripcion():
@@ -152,19 +154,33 @@ def descargar_transcripcion():
 
 @app.route('/resumen')
 def resumen():
-    session['email'] = sql.provisional() # PROVISIONAL
     texto = sql.consultar_ult_texto(session['email'])
-    resumen = sql.resumidor(texto)
-    return render_template('resumen.html')
+    print(texto)
+    resumen = nlp.hacer_resumen(texto)
+    return render_template('resumen.html', resumen = resumen)
 
 @app.route('/estadisticas')
 def estadisticas():
-    session['email'] = sql.provisional() # PROVISIONAL
-    textos = sql.consultar_textos(session['email'])
+    texto = sql.consultar_textos(session['email'])
     # muestra una tabla con las palabras más usadas y su frecuencia (obligatorio, no tenemos ninguna tabla de sql!)
-    sql.wordcloud(textos) # genera la imagen del wordcloud y la guarda en la carpeta static
-    sql.histograma(textos) # genera la imagen del histograma y la guarda en la carpeta static
-    return render_template('estadisticas.html')
+    
+    wordcloud_base64 = nlp.wordcloud(texto)
+    hist_base64, frecuencia_palabras = nlp.generar_histograma(texto)
+
+    # average word length in texto
+    longitud = round(nlp.average_word_length(texto),2)
+    frases = nlp.n_frases(texto)
+    total_palabras = len(texto.split())
+    total_palabras_unicas = len(set(texto.split()))
+
+    return render_template('estadisticas.html', 
+                            wc=wordcloud_base64, 
+                            hist=hist_base64, 
+                            longitud=longitud,
+                            n_frases=frases, 
+                            frecuencia_palabras=frecuencia_palabras, 
+                            total_palabras=total_palabras,
+                            total_palabras_unicas=total_palabras_unicas)
 
 if __name__ == '__main__':
     app.run(debug=True)

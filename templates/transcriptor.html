@@ -7,19 +7,22 @@
 <div class="container pt3 pb3">
 <section class="pb4">
     <h2 class="text--gray pb1 border--bottom">Sube un vídeo</h2>
-    <form class="form" method="post" enctype="multipart/form-data" action = '{{url_for("transcriptor")}}' onsubmit='loading()'>
-        <input type="file" name="file">
-        <br>
-        <div class="select mb1">
-            <label for="size">Selecciona la complejidad del modelo:</label>
-            <select name='size'>
-                <option selected>tiny</option>
-                <option>base</option>
-            </select>
-        </div>
-        <button class="btn btn--default" type="submit">Empezar transcripción</button>
-    </form>
-    <span class="loader"></span>
+    <img src="" id="gif">
+    <blockquote class="blockquote" id="mensaje"></blockquote>
+    <div id="div-a-ocultar">
+        <form class="form" method="post" enctype="multipart/form-data" action = '{{url_for("transcriptor")}}'>
+            <input type="file" name="file">
+            <br>
+            <div class="select mb1">
+                <label for="size">Selecciona la complejidad del modelo:</label>
+                <select name='size'>
+                    <option selected>tiny</option>
+                    <option>base</option>
+                </select>
+            </div>
+            <button class="btn btn--default" type="submit" onclick="mostrarGif()">Empezar transcripción</button>
+        </form>
+    </div>
 </section>
 <div class="border--bottom pb2 mb2">
     <h3>Sobre los modelos</h3>
@@ -34,5 +37,13 @@
 </div>
 </div>
 </div>
+
+<script>
+function mostrarGif() {
+    document.getElementById("gif").src = "../static/imagenes/loading.gif";
+    document.getElementById("mensaje").innerHTML = "Gracias por tu paciencia {{nombre.capitalize()}}. El proceso puede tardar entre 20 y 30 segundos por minuto de vídeo.";
+    document.getElementById("div-a-ocultar").style.display = "none";
+  }
+</script>
 
 {% endblock %}

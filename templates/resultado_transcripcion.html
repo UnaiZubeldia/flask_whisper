@@ -3,8 +3,12 @@
 {% block titulo %} Análisis de la transcripción {% endblock %}
 
 {% block cuerpo %}
-<div class="container pt3 pb3">
-    <h2>Transcripción completada</h2>
+<div class="pb4 align--center">>
+    <div class="success-msg">
+        <i class="fa fa-check"></i>
+        <h2>Transcripción completada</h2>
+      </div>
+
     <br><br>
     <h3> ¿Te interesa guardarla para otro momento? ¡Pincha aquí y se te guardará! </h3>
     <a class="btn btn--default" href="{{ url_for('descargar_transcripcion') }}">Descargar transcripción</a>
